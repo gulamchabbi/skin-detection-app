@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Skin Detection</title>
+</head>
+<body style="
+    font-family: Arial;
+    text-align: center;
+    margin: 0;
+    height: 100vh;
+    background: url('https://images.unsplash.com/photo-1681911046053-1d2fdce39ea0?q=80&w=1121&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
+">
+
+<div style="
+    background: rgba(0,0,0,0.6);
+    height: 100%;
+    padding-top: 50px;
+    color: white;
+">
+
+<h1>AI Skin Disease Detection</h1>
+
+<input type="file" id="fileInput" onchange="previewImage()" />
+<br><br>
+
+<img id="preview" width="200" style="display:none; border-radius:10px;" />
+<br><br>
+
+<button onclick="uploadImage()" style="
+    padding:10px 20px;
+    font-size:16px;
+    background:#00c853;
+    color:white;
+    border:none;
+    border-radius:5px;
+">
+Predict
+</button>
+
+<h2 id="result"></h2>
+<h3 id="confidence"></h3>
+
+<script>
+function previewImage() {
+    const file = document.getElementById("fileInput").files[0];
+    const preview = document.getElementById("preview");
+
+    preview.src = URL.createObjectURL(file);
+    preview.style.display = "block";
+}
+
+async function uploadImage() {
+    const fileInput = document.getElementById("fileInput");
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert("Select image");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    document.getElementById("result").innerText = "Analyzing...";
+    document.getElementById("confidence").innerText = "";
+
+    const response = await fetch("http://127.0.0.1:8000/predict", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await response.json();
+
+    document.getElementById("result").innerText = "Prediction: " + data.prediction;
+    document.getElementById("confidence").innerText = "Confidence: " + data.confidence + "%";
+}
+</script>
+
+</div>
+</body>
+</html>
+
+
+<p style="
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: #ccc;
+">
+    Developed by Gulam N Chabbi
+</p>
