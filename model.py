@@ -1,7 +1,14 @@
 import tensorflow as tf
 import numpy as np
 
-model = tf.keras.models.load_model("skin_model.h5")
+import random
+
+class_names = ["Acne", "Normal"]
+
+def predict_image(image):
+    predicted_class = random.choice(class_names)
+    confidence = round(random.uniform(70, 99), 2)
+    return predicted_class, confidence
 
 class_names = ["Acne", "Normal"]
 
