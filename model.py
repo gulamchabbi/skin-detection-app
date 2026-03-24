@@ -7,8 +7,8 @@ class_names = ["Acne", "Normal"]
 
 def predict_image(image):
     predicted_class = random.choice(class_names)
-    confidence = round(random.uniform(70, 99), 2)
-    return predicted_class, confidence
+    confidence = round(random.uniform(75, 98), 2)
+    return predicted_class, confidence predicted_class, confidence
 
 class_names = ["Acne", "Normal"]
 
